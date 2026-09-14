@@ -4,7 +4,7 @@ export default function Home() {
     <main className="min-h-screen bg-zinc-950 text-white">
       <section className="mx-auto flex min-h-screen max-w-5xl flex-col justify-center px-6 py-16">
         <p className="mb-4 text-sm font-medium uppercase tracking-widest text-zinc-400">
-          LaunchBoard
+      {process.env.NEXT_PUBLIC_APP_NAME}
         </p>
 
         <h1 className="max-w-3xl text-5xl font-bold tracking-tight sm:text-6xl">
