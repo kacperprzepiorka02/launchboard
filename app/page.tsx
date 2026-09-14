@@ -8,7 +8,7 @@ export default function Home() {
         </p>
 
         <h1 className="max-w-3xl text-5xl font-bold tracking-tight sm:text-6xl">
-          Portfolio projektów i środowisk produkcyjnych.
+          Portfolio projektów i środowisk produkcyjnych — deployed with Vercel.
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
