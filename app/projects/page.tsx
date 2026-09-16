@@ -1,4 +1,22 @@
-export default function ProjectsPage() {
+import { supabase } from "@/lib/supabase/client";
+
+export default async function ProjectsPage() {
+  const { data: projects, error } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-zinc-950 px-6 py-16 text-white">
+        <div className="mx-auto max-w-5xl">
+          <h1 className="text-2xl font-bold">Błąd pobierania projektów</h1>
+          <p className="mt-4 text-red-400">{error.message}</p>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-zinc-950 px-6 py-16 text-white">
       <div className="mx-auto max-w-5xl">
@@ -10,39 +28,29 @@ export default function ProjectsPage() {
           Moje projekty
         </h1>
 
-        <p className="mt-4 max-w-2xl text-zinc-400">
-          Projekty, technologie i środowiska, które buduję i wdrażam.
-        </p>
-
         <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <article className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-            <p className="text-sm text-zinc-500">01</p>
-            <h2 className="mt-2 text-xl font-semibold">LaunchBoard</h2>
-            <p className="mt-3 text-zinc-400">
-              Portfolio dashboard zbudowany przy użyciu Next.js i wdrożony na
-              Vercel.
-            </p>
+          {projects?.map((project) => (
+            <article
+              key={project.id}
+              className="rounded-xl border border-zinc-800 bg-zinc-900 p-6"
+            >
+              <p className="text-sm text-zinc-500">
+                Projekt #{project.id}
+              </p>
 
-            <div className="mt-5 flex flex-wrap gap-2">
-              <span className="rounded-full bg-zinc-800 px-3 py-1 text-sm">
-                Next.js
-              </span>
-              <span className="rounded-full bg-zinc-800 px-3 py-1 text-sm">
-                TypeScript
-              </span>
-              <span className="rounded-full bg-zinc-800 px-3 py-1 text-sm">
-                Vercel
-              </span>
-            </div>
-          </article>
+              <h2 className="mt-2 text-xl font-semibold">
+                {project.title}
+              </h2>
 
-          <article className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-            <p className="text-sm text-zinc-500">02</p>
-            <h2 className="mt-2 text-xl font-semibold">Coming soon</h2>
-            <p className="mt-3 text-zinc-400">
-              Kolejny projekt zostanie tutaj dodany w przyszłości.
-            </p>
-          </article>
+              <p className="mt-3 text-zinc-400">
+                {project.description}
+              </p>
+
+              <p className="mt-4 text-sm text-zinc-500">
+                {project.tech_stack}
+              </p>
+            </article>
+          ))}
         </div>
       </div>
     </main>
